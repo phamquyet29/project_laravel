@@ -43,13 +43,24 @@
                                 <td>{{ $item->category_id }}</td>
                                 <td>{{ $item->category ? $item->category->catname : 'N/A' }}</td>
                                 <td>
-                                    <form action="{{ route('products.destroy', $item->id) }}" method="POST">
-                                        <a href="{{ route('products.edit', $item->id) }}" class="btn btn-info">Sửa</a>
+                                    <form id="delete-form-{{ $item->id }}" action="{{ route('products.destroy', $item->id) }}" method="POST">
+                                        <a href="{{ route('products.edit', $item->id) }}" class="btn bg-warning">Sửa</a>
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Xoá</button>
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $item->id }})">Xoá</button>
                                     </form>
                                 </td>
+                                @once
+                                    <script>
+                                        function confirmDelete(productId) {
+                                            if (confirm('Bạn có chắc chắn muốn xoá sản phẩm này không?')) {
+                                                document.getElementById('delete-form-' + productId).submit();
+                                            }
+                                            return false;
+                                        }
+                                    </script>
+                                @endonce
+
                             </tr>
                            
                         @endforeach

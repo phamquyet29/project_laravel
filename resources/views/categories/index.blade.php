@@ -41,7 +41,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <a href="{{ route('products.index')}}" class="btn btn-primary float-end">Danh sách sản phẩm</a>
+                <a href="{{ route('products.index')}}" class="btn bg-warning float-end">Danh sách sản phẩm</a>
             </div>
         </div>
     </div>

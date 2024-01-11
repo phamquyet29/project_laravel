@@ -9,7 +9,7 @@
                     <h3>Cập nhật sản phẩm</h3>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ route('products.index')}}" class="btn btn-primary float-end">Danh sách sản phẩm</a>
+                    <a href="{{ route('products.index')}}" class="btn bg-warning float-end">Danh sách sản phẩm</a>
                 </div>
             </div>
         </div>
@@ -33,14 +33,20 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <strong>Id Category</strong>
-                            <input type="number" value="{{ $product->category_id }}" name="category_id" class="form-control" placeholder="category_id">
-                        </div>
+                        <label for="category_id"><strong>Chọn danh mục</strong></label>
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="{{ $product->category_id  }} " >{{ $product->category_id  }}</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->catname }}</option>
+                            @endforeach
+                        </select> 
+                      
                         
                     
                 </div>
-                <button type="submit" class="btn btn-success mt-2">Cập nhật</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success mt-2 w-25 ">Cập nhật</button>
+                </div>
             </form>
         </div>
     </div>

@@ -25,6 +25,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        $categories = Categories::all();
         return view('categories.create'); // Tạo view để hiển thị form thêm mới
     }
 
