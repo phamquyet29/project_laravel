@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('products.store') }}" method="POST">
+            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -40,7 +40,15 @@
                              @enderror
                         </div>
                     </div>
+                    
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="image"><strong>Ảnh sản phẩm</strong></label>
+                            <input type="file" name="image" class="form-control">
+                            @error('image')
+                                <span class="text-danger">{{ 'Bạn cần thêm ảnh' }}</span>
+                            @enderror
+                        </div>
                         <label for="category_id"><strong>Chọn danh mục</strong></label>
                         <select name="category_id" id="category_id" class="form-control">
                             <option value="">Chọn danh mục</option>

@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('products.update', $product->id) }}" method="POST">
+            <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -33,6 +33,22 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="image"><strong>Ảnh sản phẩm</strong></label>
+                            
+                            <input type="file" name="image" class="form-control">
+                            
+                            @error('image')
+                                <span class="text-danger">{{ 'Bạn cần thêm ảnh' }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="current_image"><strong>Ảnh hiện tại</strong></label>
+                            <br>
+                            <img src="{{ asset('storage/avatars/' . $product->image) }}" alt="{{ $product->name }}" style="max-width: 50px;">
+
+                            <input type="hidden" name="current_image" value="{{ $product->image }}">
+                        </div>
                         <label for="category_id"><strong>Chọn danh mục</strong></label>
                         <select name="category_id" id="category_id" class="form-control">
                             <option value="{{ $product->category_id  }} " >{{ $product->category_id  }}</option>

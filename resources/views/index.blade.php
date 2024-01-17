@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th>STT</th>
+                            <th>Ảnh</th>
                             <th>Id</th>
                             <th>Tên</th>
                             <th>Giá</th>
@@ -34,13 +35,17 @@
                     </thead>
                     <tbody>
                         @foreach ($products as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                 <td>{{ $loop->iteration }}</td>
+                                 <td>
+                                    <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" style="max-width: 50px;">
+
+                                </td>
                                 <td>{{ $item->id }}</td>
+                                
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->description }}</td>
-                                <td>{{ $item->category_id }}</td>
+                                <td>{{ $item->category_id }}</td>   
                                 <td>{{ $item->category ? $item->category->catname : 'N/A' }}</td>
                                 <td>
                                     <form id="delete-form-{{ $item->id }}" action="{{ route('products.destroy', $item->id) }}" method="POST">

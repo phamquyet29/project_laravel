@@ -5,6 +5,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
+use Illuminate\Support\Facades\Storage;
+
 class ProductsController extends Controller
 {
     /**
@@ -47,8 +49,22 @@ class ProductsController extends Controller
                 'numeric',
                 Rule::exists('categories', 'id'), 
             ],
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        Products::create($request->all());
+        if ($request->hasFile('image')) {
+            $content = $request->file('image');
+            $imageName = Storage::put('public/avatars', $content);
+            
+            $imageUrl=Storage::url($imageName);
+            // dd($imageUrl);
+        }
+        Products::create([
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'description' => $request->input('description'),
+            'category_id' => $request->input('category_id'),
+            'image' => $imageUrl, 
+        ]);
         return redirect()->route('products.index')->with('thongbao', 'Thêm thành công!');
     }
 
