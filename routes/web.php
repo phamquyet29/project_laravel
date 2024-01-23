@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ProductUseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +16,9 @@ use App\Http\Controllers\CategoriesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductUseController::class, 'index'])->name('welcome');
+
+Route::get('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::resource('/categories', CategoriesController::class);
 
