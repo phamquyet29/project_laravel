@@ -17,13 +17,15 @@ use App\Http\Controllers\ProductUseController;
 */
 
 Route::get('/', [ProductUseController::class, 'index'])->name('welcome');
+Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
+Route::get('/products/{id}', [ProductsController::class,'show'])->name('products.show');
 
-Route::get('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/add-to-cart/{product}', [ProductsController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [ProductsController::class, 'showCart'])->name('cart.show');
+Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
 
 Route::resource('/categories', CategoriesController::class);
-
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
-Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
 Route::put('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
 Route::put('/categories/{category}', [CategoriesController::class, 'update'])->name('categories.update');

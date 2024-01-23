@@ -37,7 +37,7 @@
         <div class="collapse navbar-collapse d-flex justify-content-evenly" id="navbarTogglerDemo03">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
             <li class="nav-item active pe-5">
-              <a class="nav-link " href="#">Home</a>
+              <a class="nav-link " href="/">Home</a>
             </li>
             <li class="nav-item pe-5">
               <a class="nav-link" href="#">Sản phẩm</a>
@@ -61,71 +61,43 @@
         </div>
       </nav>
 
-    <div class="container">
-
-      <div class="d-flex">
-        <img src="https://theme.hstatic.net/1000090364/1001154354/14/slider_1.jpg?v=159" alt="">
-        <div class="d-flex flex-column ps-5 pt-4">
-          <img class="pb-3" src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_1.jpg?v=159" alt="">
-        <img src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_2.jpg?v=159" alt="">
-        </div>
-      </div>
-
-      <div class="row mb-2">
-        <div class="col-md-6">
-          <div class="card flex-md-row mb-4 box-shadow h-md-250">
-            <div class="card-body d-flex flex-column align-items-start">
-              <h3 class="mb-0">
-                <a class="text-dark" href="#">Áo nam</a>
-              </h3>
-              <div class="mb-1 text-muted">Nov 12</div>
-              <p class="card-text mb-auto">Áo thun nam form basic, ngắn tay _ Gavani akh Shining</p>
-              <a href="#">Continue reading</a>
-            </div>
-            <img class="card-img-right flex-auto d-none d-md-block w-25" src="https://i.pinimg.com/564x/fb/41/3d/fb413d7a84a6244465feada20d43146d.jpg" alt="Card image cap">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card flex-md-row mb-4 box-shadow h-md-250">
-            <div class="card-body d-flex flex-column align-items-start">
-              <h3 class="mb-0">
-                <a class="text-dark" href="#">Áo nam</a>
-              </h3>
-              <div class="mb-1 text-muted">Nov 11</div>
-              <p class="card-text mb-auto">Áo thun nam form basic, ngắn tay _ Gavani akh Shining</p>
-              <a href="#">Continue reading</a>
-            </div>
-            <img class="card-img-right flex-auto d-none d-md-block w-25" src="https://i.pinimg.com/564x/f7/79/8c/f7798cc2e4e7562cc7b2a0c937098cb4.jpg" alt="Card image cap">
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
     <main role="main" class="container ">
-      <div class="row row-cols-1 row-cols-md-5 g-4">
-        @foreach ($products as $product)
-        <div class="col">
-          <div class="card">
-            <a href="{{ route('products.show', ['id' => $product->id]) }}"><img class="w-100" src={{ $product->image }} class="card-img-top"
-              alt="Hollywood Sign on The Hill" /></a>
-            <div class="card-body">
-              <h5 class="card-title">{{ $product->name }}</h5>
-              <p class="card-text">
-                {{ $product->description }}
-              </p>
-              <p class="text-center fw-semibold">{{ number_format($product->price, 0, ',', '.') }}VNĐ</p>
-              <div class="d-flex flex-colunm justify-content-center">
-                <a href="{{ route('cart.add', ['product' => $product->id]) }}" class="btn bg-danger text-white">Add to Cart</a>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-              </div>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Chi tiết sản phẩm</h3>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-6">
+                    <div class="white-box text-center"><img src="{{ $product->image }}" class="img-responsive w-50"></div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-6">
+                    <h4 class="box-title mt-5">{{ $product->name }}</h4>
+                    <p>{{ $product->description }}</p>
+                    <h2 class="mt-5">
+                        {{ number_format($product->price, 0, ',', '.') }} VNĐ
+                    </h2>
+                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                        <i class="fa fa-shopping-cart"></i>
+                    </button>
+                    <button class="btn btn-primary btn-rounded">Buy Now</button>
+                    <h3 class="box-title mt-5">{{ $product->category->catname }}</h3>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-check text-success"></i> {{ $product->category->catname }}</li>
+                        <li><i class="fa fa-check text-success"></i>Designed to foster easy portability</li>
+                        <li><i class="fa fa-check text-success"></i>Perfect furniture to flaunt your wonderful collectibles</li>
+                    </ul>
+                </div>
+                
             </div>
-            
-          </div>
-          
         </div>
-        @endforeach
-      </div>  
-
+    </div>
+</div>
+          
+        
 
 
     </main><!-- /.container -->
