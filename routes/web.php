@@ -4,7 +4,9 @@ use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ProductUseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +26,12 @@ Route::get('/add-to-cart/{product}', [ProductsController::class, 'addToCart'])->
 Route::get('/cart', [ProductsController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
 
+//paypal
+Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
+Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
+Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
+//
 Route::resource('/categories', CategoriesController::class);
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 Route::post('/products', [ProductsController::class, 'store'])->name('products.store');

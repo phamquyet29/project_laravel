@@ -114,9 +114,16 @@
                 {{ $product->description }}
               </p>
               <p class="text-center fw-semibold">{{ number_format($product->price, 0, ',', '.') }}VNĐ</p>
-              <div class="d-flex flex-colunm justify-content-center">
-                <a href="{{ route('cart.add', ['product' => $product->id]) }}" class="btn bg-danger text-white">Add to Cart</a>
-
+              <div class="d-flex justify-content-center">
+                <div class="d-flex flex-colunm justify-content-center ">
+                  <a href="/paypal" class="btn bg-warning text-white ps-5 pe-5">Buy</a>
+  
+                </div>
+                <div class="d-flex flex-colunm justify-content-center ps-1">
+                  <a href="{{ route('cart.add', ['product' => $product->id]) }}" class="btn bg-danger text-white"><i class="bi bi-cart-plus"></i></a>
+  
+                </div>
+                
               </div>
             </div>
             
