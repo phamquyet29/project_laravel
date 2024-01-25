@@ -11,8 +11,11 @@
     <div class="row mt-5 mb-5">
         <div class="col-10 offset-1 mt-5">
             <div class="card">
-                <div class="card-header bg-primary">
-                    <h3 class="text-white">Thanh Toán PayPal</h3>
+                <div class="card-header bg-warning">
+                    <h3 class="text-white text-center">Thanh Toán</h3>
+                    <div class="d-flex justify-content-center">
+                        <img class="w-25 " src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/PayPal_logo.svg/2560px-PayPal_logo.svg.png" alt="">
+                    </div>
                 </div>
                 <div class="card-body">
   
@@ -31,7 +34,7 @@
                     @endif
                           
                     <center>
-                        <a href="{{ route('paypal.payment') }}" class="btn btn-success">Pay with PayPal </a>
+                        <a href="{{ route('paypal.payment') }}" class="btn btn-primary">Pay with PayPal </a>
                     </center>
                     <a href="/"><button class="btn btn-warning">back home</button></a>
                 </div>
