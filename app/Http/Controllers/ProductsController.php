@@ -5,6 +5,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
@@ -76,7 +77,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Products::with('category')->findOrFail($id);
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -104,16 +106,58 @@ class ProductsController extends Controller
         $product->update($request->all());
         return redirect()->route('products.index')->with('thongbao','Cập nhật thành công')->with('categories', $categories);;
     }
-
+    public function destroy(Products $product)
+    {
+        $product->delete();
+        return redirect()->route('products.index')->with('thongbao', 'Xoá thành công!');
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $product)
+    public function addToCart(Products $product)
     {
-        $product->delete();
-        return redirect()->route('products.index')->with('thongbao','Xoá thành công!');
+        // Lấy giỏ hàng từ session hoặc tạo mới nếu chưa tồn tại
+        $cart = Session::get('cart', []);
+
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        if (isset($cart[$product->id])) {
+            // Nếu có, tăng số lượng
+            $cart[$product->id]['quantity']++;
+        } else {
+            // Nếu chưa, thêm sản phẩm mới vào giỏ hàng
+            $cart[$product->id] = [
+                'product' => $product,
+                'quantity' => 1,
+            ];
+        }
+
+        // Lưu giỏ hàng mới vào session
+        Session::put('cart', $cart);
+
+        // Redirect hoặc trả về response tùy thuộc vào yêu cầu của bạn
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
+
+    /**
+     * Display the cart.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCart()
+    {
+        // Lấy giỏ hàng từ session
+        $cart = Session::get('cart', []);
+
+        // Kiểm tra nếu giỏ hàng không rỗng thì hiển thị view cart.show
+        if (!empty($cart)) {
+            return view('cart.show', compact('cart'));
+        } else {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
+    }
+
 }
