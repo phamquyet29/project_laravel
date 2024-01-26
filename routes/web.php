@@ -39,5 +39,7 @@
     Route::get('/', [ProductUseController::class, 'index'])->name('welcome');
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/add-to-cart/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart', [ProductsController::class, 'showCart'])->name('cart.show');
+    Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
     Route::resource('/categories', CategoriesController::class);
     Route::resource('/users', AccoutController::class);
