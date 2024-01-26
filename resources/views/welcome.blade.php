@@ -56,8 +56,13 @@
             <button class="btn btn-outline-success my-2 my-sm-0 ms-2" type="submit">Search</button>
           </form>
           <div>
-           <button type="button" class="btn btn-danger">Đăng nhập</button>
-          <button type="button" class="btn btn-secondary">Đăng ký</button>
+          <a class="btn btn-danger" href="/login">Signin</a>
+          <a class="btn btn-secondary" href="/register">Signup</a>
+          <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger" type="submit">Logout</button>
+            </form>
           </div>
         </div>
       </nav>
