@@ -7,6 +7,8 @@
     use App\Http\Controllers\ProductUseController;
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\AccoutController;
+use App\Http\Controllers\PayPalController;
+
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -43,3 +45,13 @@
     Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
     Route::resource('/categories', CategoriesController::class);
     Route::resource('/users', AccoutController::class);
+    Route::get('/products/{id}', [ProductsController::class,'show'])->name('products.show');
+    //paypal
+    Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
+    Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
+    Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
+    Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
+    //
+    Route::put('/update-quantity/{product}/{quantity}', [CartController::class,'updateQuantity'])->name('updateQuantity');
+    Route::delete('/cart/remove/{product}', [CartController::class, 'destroy'])->name('cart.remove');
+    Route::get('/search', [ProductsController::class,'search'])->name('products.search');

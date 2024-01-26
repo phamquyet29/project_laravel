@@ -46,14 +46,14 @@
               <a class="nav-link" href="/products">Admin</a>
             </li>
           </ul>
-          <a href="{{ route('cart.show') }}">
+          <a class="btn btn-warning" href="{{ route('cart.show') }}">
             Cart <span class="badge badge-pill badge-info">{{ count(Session::get('cart', [])) }}</span>
         </a>
         
-          <form class="form-inline my-2 my-lg-0 d-flex ms-5">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0 ms-2" type="submit">Search</button>
-          </form>
+        <form class="form-inline my-2 my-lg-0 d-flex ms-5" action="{{ route('products.search') }}" method="GET">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
           <div>
           <a class="btn btn-danger" href="/login">Signin</a>
           <a class="btn btn-secondary" href="/register">Signup</a>
@@ -108,10 +108,11 @@
 
     <main role="main" class="container ">
       <div class="row row-cols-1 row-cols-md-5 g-4">
+        @if (!empty($products))
         @foreach ($products as $product)
         <div class="col">
           <div class="card">
-            <a href="{{ route('products.show', ['id' => $product->id]) }}"><img class="w-100" src={{ $product->image }} class="card-img-top"
+            <a href="{{ route('products.show', ['id' => $product->id]) }}"><img class="w-100 p-3" src={{ $product->image }} class=" card-img-top"
               alt="Hollywood Sign on The Hill" /></a>
             <div class="card-body">
               <h5 class="card-title">{{ $product->name }}</h5>
@@ -124,10 +125,10 @@
                   <a href="/paypal" class="btn bg-warning text-white ps-5 pe-5">Buy</a>
   
                 </div>
-                <div class="d-flex flex-colunm justify-content-center ps-1">
-                  <a href="{{ route('cart.add', ['product' => $product->id]) }}" class="btn bg-danger text-white"><i class="bi bi-cart-plus"></i></a>
-  
-                </div>
+                <div class="d-flex flex-column justify-content-center ps-1">
+                  <a href="{{ route('cart.add', ['productId' => $product->id]) }}" class="btn bg-danger text-white"><i class="bi bi-cart-plus"></i></a>
+              </div>
+              
                 
               </div>
             </div>
@@ -136,6 +137,9 @@
           
         </div>
         @endforeach
+        @else
+        <p>No products found.</p>
+        @endif
       </div>  
 
 

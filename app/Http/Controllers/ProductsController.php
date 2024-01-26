@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\Products;
@@ -18,9 +19,9 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Products::with('category')->get();
-    return view('index', compact('products'));
+        return view('index', compact('products'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,15 +49,15 @@ class ProductsController extends Controller
             'category_id' => [
                 'required',
                 'numeric',
-                Rule::exists('categories', 'id'), 
+                Rule::exists('categories', 'id'),
             ],
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         if ($request->hasFile('image')) {
             $content = $request->file('image');
             $imageName = Storage::put('public/avatars', $content);
-            
-            $imageUrl=Storage::url($imageName);
+
+            $imageUrl = Storage::url($imageName);
             // dd($imageUrl);
         }
         Products::create([
@@ -64,7 +65,7 @@ class ProductsController extends Controller
             'price' => $request->input('price'),
             'description' => $request->input('description'),
             'category_id' => $request->input('category_id'),
-            'image' => $imageUrl, 
+            'image' => $imageUrl,
         ]);
         return redirect()->route('products.index')->with('thongbao', 'Thêm thành công!');
     }
@@ -104,14 +105,14 @@ class ProductsController extends Controller
     {
         $categories = Categories::all();
         $product->update($request->all());
-        return redirect()->route('products.index')->with('thongbao','Cập nhật thành công')->with('categories', $categories);;
+        return redirect()->route('products.index')->with('thongbao', 'Cập nhật thành công')->with('categories', $categories);;
     }
     public function destroy(Products $product)
     {
         $product->delete();
         return redirect()->route('products.index')->with('thongbao', 'Xoá thành công!');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -154,10 +155,23 @@ class ProductsController extends Controller
 
         // Kiểm tra nếu giỏ hàng không rỗng thì hiển thị view cart.show
         if (!empty($cart)) {
-            return view('cart.show', compact('cart'));
+            return view('cartshow', compact('cart'));
         } else {
             return redirect()->back()->with('error', 'Your cart is empty.');
         }
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $products = Products::where('name', 'like', "%$keyword%")
+            ->orWhere('description', 'like', "%$keyword%")
+            ->get();
 
+        return view('welcome', compact('products'));
+    }
+    public function updateQuantity(Products $product, $quantity)
+{
+    
+    return response()->json(['totalPrice' => $product->price * $quantity]);
+}
 }
