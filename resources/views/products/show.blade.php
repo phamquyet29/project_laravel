@@ -72,7 +72,7 @@
             <h3 class="card-title">Chi tiết sản phẩm</h3>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-6">
-                    <div class="white-box text-center"><img src="{{ $product->image }}" class="img-responsive w-50"></div>
+                    <div class="white-box text-center"><img src="{{ $product->image }}" class="img-responsive w-50 pt-5 mt-5"></div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
                     <h4 class="box-title mt-5">{{ $product->name }}</h4>

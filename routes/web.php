@@ -40,3 +40,7 @@ Route::put('/categories/{category}', [CategoriesController::class, 'update'])->n
 
 Route::delete('/products/{product}', [ProductsController::class, 'destroy'])->name('products.destroy');
 Route::get('/products/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
+
+Route::get('/search', [ProductsController::class,'search'])->name('products.search');
+Route::put('/update-quantity/{product}/{quantity}', [CartController::class,'updateQuantity'])->name('updateQuantity');
+Route::delete('/cart/remove/{product}', [CartController::class, 'destroy'])->name('cart.remove');
