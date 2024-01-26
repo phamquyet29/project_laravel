@@ -30,5 +30,17 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'paypal' => [
+        'client_id' => env('AT3Ms135B2T2OANsU05Wd7E1PoSbtlQID1gtwuQNPYev17TCt8hGEtVznPB5vl8aaFmfr6KVg3spXRC1'),
+        'secret' => env('EMMeeYjs3OUUGjxsfvRSdeJ6k20Zpi6UhcBWqV1OeXM6t0JGqp8auwwJKtIrxU9w_cL-bkkrt25y4u66'),
+        'settings' => [
+            'mode' => env('PAYPAL_MODE', 'sandbox'),
+            'http.ConnectionTimeOut' => 30,
+            'log.LogEnabled' => true,
+            'log.FileName' => storage_path() . '/logs/paypal.log',
+            'log.LogLevel' => 'ERROR',
+        ],
+    ],
+    
 
 ];
