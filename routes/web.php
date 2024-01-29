@@ -22,10 +22,12 @@ Route::get('/', [ProductUseController::class, 'index'])->name('welcome');
 Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 Route::get('/products/{id}', [ProductsController::class,'show'])->name('products.show');
 
+//cart 
 Route::get('/add-to-cart/{product}', [ProductsController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [ProductsController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
-
+Route::delete('/cart/remove', [CartController::class,'removeItem'])->name('cart.remove');
+Route::delete('/cart/clear',[CartController::class, 'clearCart'])->name('cart.clear');
 //paypal
 Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
 Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
@@ -44,3 +46,4 @@ Route::get('/products/{product}/edit', [ProductsController::class, 'edit'])->nam
 Route::get('/search', [ProductsController::class,'search'])->name('products.search');
 Route::put('/update-quantity/{product}/{quantity}', [CartController::class,'updateQuantity'])->name('updateQuantity');
 Route::delete('/cart/remove/{product}', [CartController::class, 'destroy'])->name('cart.remove');
+

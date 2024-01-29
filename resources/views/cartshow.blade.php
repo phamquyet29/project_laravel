@@ -48,14 +48,23 @@
                                         <td class="text-right font-weight-semibold align-middle p-4">
                                             {{ number_format($item['product']->price * $item['quantity'], 0, ',', '.') }}VNĐ
                                         </td>
+                                        <td class="text-center align-middle px-0">
+                                            <a class="btn btn-danger" href="javascript:void(0)" onclick="removeItemFormCart('{{ $item['product']->id }}')">
+                                                xoá
+                                            </a>
+                                            {{-- <button type="submit" class="shop-tooltip close float-none text-danger" >×</button> --}}
+                                        </td>
                                         <!-- Thêm cột Xóa vào bảng sản phẩm trong Blade Template -->
-                                        <form method="POST" action="{{ route('cart.remove', ['product' => $item['product']->id]) }}">
+                                        <form id="deleteFormCart" method="POST" action="{{ route('cart.remove',['product' => $item['product']->id]) }}">
                                             @csrf
                                             @method('DELETE')
-                                        
-                                            <td class="text-center align-middle px-0">
-                                                <button type="submit" class="shop-tooltip close float-none text-danger" >×</button>
-                                            </td>
+                                            <input type="hidden" id="rowId_D" name="rowId">
+                                            
+                                        </form>
+                                        <form action="{{ route('cart.clear') }}" id="clearCart" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            
                                         </form>
                                         
 
@@ -76,12 +85,18 @@
                         <input type="text" placeholder="ABC" class="form-control">
                     </div>
                     <div class="d-flex">
-                        
+                        <div class="col-sm-7 col-5 order-1">
+                            <div class="left-side-button text-end d-flex d-block justify-content-end">
+                                <a href="javascript:void(0)" onclick="clearCart()" class="text-decoration-underline theme-color d-block text-capitalize">clear all items</a>
+                            </div>
+                        </div>
                         <div class="text-right mt-4">
+                            
                             <label class="text-muted font-weight-normal m-0">Total price</label>
                             <div class="text-large">
                                 <strong>{{ number_format($total, 0, ',', '.') }}VNĐ</strong>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -94,82 +109,18 @@
         </div>
     </div>
 
-    @section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Lấy danh sách tất cả các ô số lượng
-            const quantityInputs = document.querySelectorAll('.quantity-input');
-
-            // Lặp qua từng ô số lượng và thêm sự kiện khi giá trị thay đổi
-            quantityInputs.forEach(function (input) {
-                input.addEventListener('input', function () {
-                    // Lấy giá trị mới của số lượng và ID sản phẩm
-                    const newQuantity = parseInt(this.value) || 1;
-                    const productId = this.dataset.productId;
-
-                    // Cập nhật giá tiền trực tiếp trong cùng một dòng
-                    const priceElement = this.closest('tr').querySelector('.price');
-                    const unitPrice = parseFloat(priceElement.dataset.unitPrice);
-                    const totalPrice = newQuantity * unitPrice;
-                    priceElement.innerText = formatCurrency(totalPrice);
-
-                    // Gửi yêu cầu AJAX để cập nhật số lượng trên máy chủ
-                    // Trong ví dụ này, giả sử bạn có một route là '/update-quantity'
-                    fetch(`/update-quantity/${productId}/${newQuantity}`, {
-                        method: 'PUT', // hoặc 'POST' tùy thuộc vào cấu hình của bạn
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // Điều này là cần thiết nếu bạn sử dụng CSRF protection
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Cập nhật tổng giá và các thông tin khác nếu cần
-                        // Ví dụ: document.getElementById('totalPrice').innerText = data.totalPrice;
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                });
-            });
-
-            // Hàm chuyển đổi số thành định dạng tiền tệ
-            function formatCurrency(value) {
-                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-            }
-        });
-        function removeProduct(productId) {
-        if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng không?')) {
-            // Gửi yêu cầu xóa sản phẩm thông qua AJAX
-            fetch(`/remove-product/${productId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    console.log('CSRF Token:', '{{ csrf_token() }}');
-
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Xóa dòng sản phẩm khỏi giao diện nếu xóa thành công
-                if (data.success) {
-                    const productRow = document.querySelector(`#productRow${productId}`);
-                    productRow.parentNode.removeChild(productRow);
-
-                    // Cập nhật tổng giá tiền hoặc các thông tin khác nếu cần
-                    // Ví dụ: document.getElementById('totalPrice').innerText = data.totalPrice;
-                    console.log(data);
-                } else {
-                    alert('Đã xảy ra lỗi khi xóa sản phẩm. Vui lòng thử lại.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    }
-    </script>
-    @endsection
+    
 @endsection
+@push('scripts')
+    <script>
+       function removeItemFormCart(productId)
+       {
+        $('#rowId_D').val(productId);
+        $('#detleteFormCart').submit();
+       }
+       function clearCart()
+       {
+        $('#clearCart').submit()
+       }
+    </script>
+    @endpush

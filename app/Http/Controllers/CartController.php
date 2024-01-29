@@ -43,4 +43,15 @@ class CartController extends Controller
             // hoặc có thể ném ra một exception
         }
     }
+    public function removeItem(Request $request)
+    {
+        $rowId = $request->rowId;
+        Cart::instance('cart')->remove($rowId);
+        return redirect()->route('cart.index');
+    }
+    public function clearCart()
+    {
+        Cart::instance('cart')->destroy();
+        return redirect()->route('cart.index');
+    }
 }
