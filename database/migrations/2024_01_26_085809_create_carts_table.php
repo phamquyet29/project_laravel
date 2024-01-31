@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
-            $table->string('');
+            $table->string('aaa');
 
             $table->timestamps();
         });
