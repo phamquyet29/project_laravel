@@ -97,86 +97,15 @@
             </div>
         </nav>
 
-        <div class="container">
 
-            <div class="d-flex">
-                <img src="https://theme.hstatic.net/1000090364/1001154354/14/slider_1.jpg?v=159" alt="">
-                <div class="d-flex flex-column ps-5 pt-4">
-                    <img class="pb-3" src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_1.jpg?v=159"
-                        alt="">
-                    <img src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_2.jpg?v=159" alt="">
-                </div>
-            </div>
+        <main role="main" class="container text-center pt-5 pb-5 border border-3">
+            <div class="container ">
+                <h2>User Profile</h2>
+                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
 
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <div class="card-body d-flex flex-column align-items-start">
-                            <h3 class="mb-0">
-                                <a class="text-dark" href="#">Áo nam</a>
-                            </h3>
-                            <div class="mb-1 text-muted">Nov 12</div>
-                            <p class="card-text mb-auto">Áo thun nam form basic, ngắn tay _ Gavani akh Shining</p>
-                            <a href="#">Continue reading</a>
-                        </div>
-                        <img class="card-img-right flex-auto d-none d-md-block w-25"
-                            src="https://i.pinimg.com/564x/fb/41/3d/fb413d7a84a6244465feada20d43146d.jpg"
-                            alt="Card image cap">
-                    </div>
+                    <p class="btn bg-secondary w-25" style="--bs-bg-opacity: .5;">Name: {{ Auth::user()->name }}</p>
+                    <p class="btn bg-secondary w-25" style="--bs-bg-opacity: .5;">Email: {{ Auth::user()->email }}</p>
                 </div>
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <div class="card-body d-flex flex-column align-items-start">
-                            <h3 class="mb-0">
-                                <a class="text-dark" href="#">Áo nam</a>
-                            </h3>
-                            <div class="mb-1 text-muted">Nov 11</div>
-                            <p class="card-text mb-auto">Áo thun nam form basic, ngắn tay _ Gavani akh Shining</p>
-                            <a href="#">Continue reading</a>
-                        </div>
-                        <img class="card-img-right flex-auto d-none d-md-block w-25"
-                            src="https://i.pinimg.com/564x/f7/79/8c/f7798cc2e4e7562cc7b2a0c937098cb4.jpg"
-                            alt="Card image cap">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <main role="main" class="container ">
-            <div class="row row-cols-1 row-cols-md-5 g-4 ">
-                @if (!empty($products))
-                    @foreach ($products as $product)
-                        <div class="col">
-                            <div class="card shadow p-3 mb-5 bg-white rounded border-0">
-                                <a href="{{ route('products.show', ['id' => $product->id]) }}">
-                                    <img class="w-100 p-3" src="{{ $product->image }}" class="card-img-top"
-                                        alt="Product Image">
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text">
-                                        {{ $product->description }}
-                                    </p>
-                                    <p class="text-center fw-semibold">
-                                        {{ number_format($product->price, 0, ',', '.') }}VNĐ</p>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="d-flex flex-colunm justify-content-center">
-                                            <a href="/paypal" class="btn bg-warning text-white ps-5 pe-5">Buy</a>
-                                        </div>
-                                        <div class="d-flex flex-colunm justify-content-center ps-1">
-                                            <a href="{{ route('cart.add', ['product' => $product->id]) }}"
-                                                class="btn bg-danger text-white">
-                                                <i class="bi bi-cart-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p>No products found.</p>
-                @endif
             </div>
 
 
@@ -194,12 +123,13 @@
                             </li>
                             <li class="nav-item mb-2"><a href="#"
                                     class="nav-link p-0 text-body-secondary">Features</a></li>
-                            <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
+                            </li>
                             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
                             </li>
                             <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-body-secondary">About</a></li>
+                                    class="nav-link p-0 text-body-secondary">About</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -271,7 +201,7 @@
         </div>
 
         <!-- Bootstrap core JavaScript
-                                                        ================================================== -->
+                                                                                ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script>
             // public/js/scripts.js hoặc tương tự

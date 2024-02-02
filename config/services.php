@@ -40,7 +40,14 @@ return [
             'log.FileName' => storage_path() . '/logs/paypal.log',
             'log.LogLevel' => 'ERROR',
         ],
+
     ],
-    
+    'google' => [
+        'client_id' => env('868131364631-qubnc19542grebpqlkqs8h5j7v9r2jdk.apps.googleusercontent.com'),
+        'client_secret' => env('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'),
+        'redirect' => env('GOOGLE_REDIRECT'),
+    ],
+
+
 
 ];
