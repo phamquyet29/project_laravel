@@ -26,8 +26,12 @@ Route::get('/products/{id}', [ProductsController::class,'show'])->name('products
 Route::get('/add-to-cart/{product}', [ProductsController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart', [ProductsController::class, 'showCart'])->name('cart.show');
 Route::get('/cart/show', [ProductsController::class,'showCart'])->name('cart.show');
-Route::delete('/cart/remove', [CartController::class,'removeItem'])->name('cart.remove');
+Route::get('/cart/remove/{id}', [CartController::class,'removeItem'])->name('cart.remove');
 Route::delete('/cart/clear',[CartController::class, 'clearCart'])->name('cart.clear');
+Route::patch('/update-shopping-cart', [CartController::class, 'updateShoppingCart'])->name('update.sopping.cart');
+Route::delete('/delete-cart-product', [CartController::class, 'deleteCartProduct'])->name('delete.cart.product');
+
+
 //paypal
 Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
 Route::get('paypal/payment', [PayPalController::class, 'payment'])->name('paypal.payment');
