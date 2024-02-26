@@ -150,6 +150,7 @@ class ProductsController extends Controller
      */
     public function showCart()
     {
+        // dd(Session::get('cart'));
         // Lấy giỏ hàng từ session
         $cart = Session::get('cart', []);
 
@@ -157,6 +158,8 @@ class ProductsController extends Controller
         if (!empty($cart)) {
             return view('cartshow', compact('cart'));
         } else {
+            // $cart=[];
+            // return view('cartshow', compact('cart'));
             return redirect()->back()->with('error', 'Your cart is empty.');
         }
     }
