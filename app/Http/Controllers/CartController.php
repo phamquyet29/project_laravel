@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use App\Models\Cart;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
     public function addToCart(Request $request, $productId)
     {
-        // Logic thêm sản phẩm vào giỏ hàng ở đây
-        // Ví dụ: tăng số lượng sản phẩm trong session
+        $product = Products::findOrFail($productId);
+        $size = $request->input('size'); // Assume size is passed in the request
 
-        $cart = $request->session()->get('cart', []);
-        $cart[$productId] = isset($cart[$productId]) ? $cart[$productId] + 1 : 1;
-        $request->session()->put('cart', $cart);
+        if ($product->sizes()->where('size', $size)->exists()) {
+            $cart = $request->session()->get('cart', []);
+            $cart[$productId][$size] = isset($cart[$productId][$size]) ? $cart[$productId][$size] + 1 : 1;
+            $request->session()->put('cart', $cart);
 
-        return redirect()->back();
+            return redirect()->back()->with('success', 'Product added to cart.');
+        } else {
+            return redirect()->back()->with('error', 'Selected size is not available for this product.');
+        }
     }
     public function destroy(Products $product)
     {
@@ -63,7 +69,6 @@ class CartController extends Controller
             // hoặc có thể ném ra một exception
             // return redirect()->back()->with('success', 'đang k có');
             return redirect()->route('cart.show')->with('error', 'Sản phẩm không tồn tại trong giỏ hàng.');
-            
         }
     }
     public function clearCart()
@@ -73,23 +78,30 @@ class CartController extends Controller
     }
     public function updateCart(Request $request)
     {
-        if($request->id && $request->quantity){
+        if ($request->id && $request->quantity) {
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
             session()->flash('success', 'Book added to cart.');
         }
     }
-   
-    public function deleteProduct(Request $request)
+
+    public function send_cart(Request $request)
     {
-        if($request->id) {
-            $cart = session()->get('cart');
-            if(isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Book successfully deleted.');
+        // Lấy thông tin giỏ hàng từ session hoặc cơ sở dữ liệu
+        $cart = session()->get('cart');
+
+        // Kiểm tra xem giỏ hàng có sản phẩm không
+        if (!empty($cart)) {
+            // Gửi email với thông tin đơn hàng
+            Mail::to('cuytsgoodboy@gmail.com')->send(new TestMail($cart));
+
+            // Xóa giỏ hàng sau khi gửi email thành công hoặc có thể xử lý theo logic của bạn
+            session()->forget('cart');
+
+            return redirect()->route('cart.show')->with('success', 'Đã gửi email xác nhận đơn hàng.');
+        } else {
+            return redirect()->route('cart.show')->with('error', 'Giỏ hàng của bạn đang trống.');
         }
     }
 }

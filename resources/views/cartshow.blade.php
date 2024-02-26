@@ -3,10 +3,73 @@
 @extends('layout')
 
 @section('content')
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img class="w-25 ms-5"
+                src="https://yt3.googleusercontent.com/x004E0HiAYxL05tMZX9-mJ8DpMadnMd9BbKvVTDCOyt_vrLqdEvYy-lpLmZrotSB_R1SoSJULm4=s176-c-k-c0x00ffffff-no-rj"
+                alt=""></a>
 
+        <div class="collapse navbar-collapse d-flex justify-content-evenly" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active pe-5">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item pe-5">
+                    <a class="nav-link" href="#">Sản phẩm</a>
+                </li>
+
+                @auth
+                    @if (auth()->user()->role == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Admin</a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+
+            <a class="btn btn-warning" href="{{ route('cart.show') }}">
+                Cart <span class="badge badge-pill badge-info">{{ count(Session::get('cart', [])) }}</span>
+            </a>
+
+            <form class="form-inline my-2 my-lg-0 d-flex ms-5" action="{{ route('products.search') }}" method="GET">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <!-- Navbar code ... -->
+
+            <div>
+                @guest
+                    <!-- Hiển thị khi chưa đăng nhập -->
+                    <a class="btn btn-danger" href="/login">Signin</a>
+                    <a class="btn btn-secondary" href="/register">Signup</a>
+                @else
+                    <!-- Hiển thị khi đã đăng nhập -->
+                    <div class="d-flex">
+                        <a class="navbar-text pe-3 text-decoration-none" href="{{ route('profile') }}">
+                            <p class="navbar-text pe-3 pt-3">Welcome, {{ Auth::user()->name }}</p>
+                        </a>
+
+                        <div>
+                            <form action="{{ route('logout') }}" method="POST" class="d-flex" role="search">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger mt-3" type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @endguest
+            </div>
+
+            <!-- Rest of the Navbar code ... -->
+
+        </div>
+    </nav>
     <div class="container px-3 my-5 clearfix">
         <!-- Shopping cart table -->
-        <div class="card">
+        <div class="card" style="margin-top: 150px">
             <div class="card-header">
                 <h2>Giỏ hàng</h2>
             </div>
@@ -34,8 +97,9 @@
                                     <tr>
                                         <td class="p-4">
                                             <div class="media align-items-center d-flex">
-                                                <img src="{{ $item['product']->image }}" alt="{{ $item['product']->name }}"
-                                                    class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                                <img class="w-25" src="{{ $item['product']->image }}"
+                                                    alt="{{ $item['product']->name }}"
+                                                    class="d-block ui-w-25 ui-bordered mr-4" alt="">
                                                 <div class="media-body">
                                                     <div class="d-block text-dark h3 ps-5">{{ $item['product']->name }}
                                                     </div>
@@ -47,8 +111,8 @@
                                         </td>
                                         <td class="align-middle p-4">
                                             <input type="number" class="form-control text-center quantity-input"
-                                                data-product-id="{{ $item['product']->id }}" value="{{ $item['quantity'] }}"
-                                                min="1">
+                                                data-product-id="{{ $item['product']->id }}"
+                                                value="{{ $item['quantity'] }}" min="1">
                                         </td>
                                         <td class="text-right font-weight-semibold align-middle p-4">
                                             {{ number_format($item['product']->price * $item['quantity'], 0, ',', '.') }}VNĐ
@@ -123,13 +187,18 @@
 @push('scripts')
     <script>
         function removeItemFormCart(productId) {
-            console.log(productId);
-            document.getElementById("rowId_D").value(productId);
-            document.getElementById("detleteFormCart").submit();
+            // Xử lý xoá sản phẩm khỏi giỏ hàng
         }
 
         function clearCart() {
-            $('#clearCart').submit()
+            $('#clearCart').submit();
         }
+
+        $(document).ready(function() {
+            // Kiểm tra nếu giỏ hàng rỗng sau khi xoá sản phẩm, chuyển hướng về trang chủ
+            if ($('.table').find('tbody').children().length == 0) {
+                window.location.href = "/";
+            }
+        });
     </script>
 @endpush

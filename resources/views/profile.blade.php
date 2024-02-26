@@ -97,118 +97,16 @@
             </div>
         </nav>
 
-        <div class="container mt-5 pt-5">
 
-            <div class="d-flex">
-                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="https://file.hstatic.net/1000402464/file/jh-fl_3890x1820-100_ee1327cd6e6c44ca8be214a2b22da43e.jpg"
-                                class="d-block w-100" alt="Slide 1">
+        <main role="main" class="container text-center pt-5 pb-5 border border-3 " style="margin-top: 200px">
+            <div class="container ">
+                <h2>User Profile</h2>
+                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
 
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://file.hstatic.net/1000402464/file/jh_3890x1820-100_adc21bb9e5ef425a948d44f679920b2c.jpg"
-                                class="d-block w-100" alt="Slide 2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://file.hstatic.net/1000402464/file/fl_3890x1820_-100_378b9aae4ffc46c1bc2be18aedf3bb2a.jpg"
-                                class="d-block w-100" alt="Slide 3">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-
-                <div class="d-flex flex-column ps-5 pt-4">
-                    <img class="pb-3" src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_1.jpg?v=159"
-                        alt="">
-                    <img src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_2.jpg?v=159" alt="">
+                    <p class="btn bg-secondary w-25" style="--bs-bg-opacity: .5;">Name: {{ Auth::user()->name }}</p>
+                    <p class="btn bg-secondary w-25" style="--bs-bg-opacity: .5;">Email: {{ Auth::user()->email }}</p>
                 </div>
             </div>
-            <div id="carouselExampleInterval" class="carousel slide mt-5 mb-5 bg-light p-5" data-bs-ride="carousel">
-                <div class="carousel-inner ">
-                    @foreach ($products as $key => $product)
-                        <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}" data-bs-interval="5000">
-                            <div class="d-flex justify-content-evenly">
-                                <img class="d-block w-25 " src="{{ $product->image }}" alt="Product Image">
-                                <div>
-                                    <h1>{{ $product->name }}</h1>
-                                    <p>{{ $product->description }}</p>
-                                </div>
-                            </div>
-                            <!-- Bạn có thể thêm mô tả hoặc nội dung khác ở đây nếu cần -->
-                        </div>
-                    @endforeach
-                </div>
-                <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="prev">
-                    <span class="text-danger" aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
-                    <span class="visually-hidden ">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                    data-bs-slide="next">
-                    <span class=" text-danger" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-
-        </div>
-
-        <main role="main" class="container ">
-            <div class="pb-5">
-                <p class="text-center fs-3 fw-bolder text-decoration-underline">NEW ARRIVALS</p>
-            </div>
-            <div class="row row-cols-1 row-cols-md-5 g-4 ">
-
-                @if (!empty($products))
-                    @foreach ($products as $product)
-                        <div class="col w-25">
-                            <div class="card shadow p-3 bg-white rounded border-0 h-100 ps-3 pe-3">
-                                <div class="h-50 pb-5">
-                                    <a href="{{ route('products.show', ['id' => $product->id]) }}">
-                                        <img class="card-img-top pb-5" src="{{ $product->image }}" alt="Product Image">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text">
-                                        {{ $product->description }}
-                                    </p>
-                                    <p class="text-center fw-semibold">
-                                        {{ number_format($product->price, 0, ',', '.') }}VNĐ
-                                    </p>
-                                    <div class="d-flex justify-content-center">
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <a href="{{ route('products.show', ['id' => $product->id]) }}"
-                                                class="btn bg-warning text-white ps-4 pe-4">Chi
-                                                tiết</a>
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center ps-1">
-                                            <a href="{{ route('cart.add', ['product' => $product->id]) }}"
-                                                class="btn bg-danger text-white">
-                                                <i class="bi bi-cart-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <p>No products found.</p>
-                @endif
-            </div>
-
 
 
 
@@ -225,12 +123,13 @@
                             </li>
                             <li class="nav-item mb-2"><a href="#"
                                     class="nav-link p-0 text-body-secondary">Features</a></li>
-                            <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
+                            </li>
                             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
                             </li>
                             <li class="nav-item mb-2"><a href="#"
-                                    class="nav-link p-0 text-body-secondary">About</a></li>
+                                    class="nav-link p-0 text-body-secondary">About</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -302,7 +201,7 @@
         </div>
 
         <!-- Bootstrap core JavaScript
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================================== -->
+                                                                                                                ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script>
             // public/js/scripts.js hoặc tương tự

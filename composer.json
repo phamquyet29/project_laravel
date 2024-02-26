@@ -10,9 +10,13 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "inertiajs/inertia-laravel": "^0.6.11",
         "laravel/framework": "^9.19",
+        "laravel/jetstream": "^3.0",
         "laravel/sanctum": "^3.0",
+        "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.11",
         "paypal/rest-api-sdk-php": "^1.6",
         "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "^13.9"

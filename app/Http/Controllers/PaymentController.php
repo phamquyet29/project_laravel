@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 // app/Http/Controllers/PaymentController.php
+
+use App\Mail\TestMail;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -36,7 +39,16 @@ class PaymentController extends Controller
             'success_url' => url('/checkout/success'),
             'cancel_url' => url('/checkout/cancel'),
         ]);
+        $this->sendConfirmationEmail();
 
         return redirect($session->url);
+    }
+    public function sendConfirmationEmail()
+    {
+        // Lấy thông tin đơn hàng hoặc giỏ hàng từ session hoặc cơ sở dữ liệu
+        // Ví dụ: $cart = session()->get('cart');
+
+        // Gửi email xác nhận đơn hàng
+        Mail::to('cuytsgoodboy@gmail.com')->send(new TestMail);
     }
 }

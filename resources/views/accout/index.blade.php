@@ -6,10 +6,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3>Quản lý danh mục</h3>
+                        <h3>Quản lý người dùng</h3>
                     </div>
                     <div class="col-md-6 text-end">
-                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Thêm mới</a>
+                        <a href="{{ route('users.create') }}" class="btn btn-primary">Thêm mới</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/">
+                                <a class="nav-link" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"
@@ -82,7 +82,7 @@
                                         <polyline points="2 17 12 22 22 17"></polyline>
                                         <polyline points="2 12 12 17 22 12"></polyline>
                                     </svg>
-                                    Home page
+                                    Integrations
                                 </a>
                             </li>
                         </ul>
@@ -171,24 +171,29 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Id</th>
-                                <th>Tên danh mục</th>
+                                <th>Tên người dùng </th>
+                                <th>Email</th>
+                                <th>Role</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->catname }}</td>
+                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->role }}</td>
+
+
                                     <td>
-                                        {{-- <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info">Sửa</a> --}}
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
-                                            style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Xoá</button>
-                                        </form>
+                                        <a class="btn btn-warning text-white"
+                                            href="{{ route('accout.edit', $user->id) }}">Thông tin</a>
+
+
+
+
                                     </td>
                                 </tr>
                             @endforeach
