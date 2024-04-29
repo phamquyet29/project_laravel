@@ -12,13 +12,13 @@
         <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-
         <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/blog/">
 
         <!-- Bootstrap core CSS -->
         <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="w.css">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
         <link href="blog.css" rel="stylesheet">
     </head>
@@ -135,6 +135,20 @@
                     <img src="https://theme.hstatic.net/1000090364/1001154354/14/right_banner_2.jpg?v=159" alt="">
                 </div>
             </div>
+            <div class="d-flex justify-content-around pt-5">
+                <div>
+                    <img style="width: 400px" src="https://routine.vn/media/amasty/webp/wysiwyg/New_Arrivals_Men_jpg.webp"
+                        alt="">
+                </div>
+                <div>
+                    <img style="width: 400px"
+                        src="https://routine.vn/media/amasty/webp/wysiwyg/AO_THUN_DONG_GIA_149K_jpg.webp" alt="">
+                </div>
+                <div>
+                    <img style="width: 400px"
+                        src="https://routine.vn/media/amasty/webp/wysiwyg/New_Arrivals_Women_jpg.webp" alt="">
+                </div>
+            </div>
             <div id="carouselExampleInterval" class="carousel slide mt-5 mb-5 bg-light p-5" data-bs-ride="carousel">
                 <div class="carousel-inner ">
                     @foreach ($products as $key => $product)
@@ -169,29 +183,25 @@
                 <p class="text-center fs-3 fw-bolder text-decoration-underline">NEW ARRIVALS</p>
             </div>
             <div class="row row-cols-1 row-cols-md-5 g-4 ">
-
                 @if (!empty($products))
                     @foreach ($products as $product)
-                        <div class="col w-25">
-                            <div class="card shadow p-3 bg-white rounded border-0 h-100 ps-3 pe-3">
-                                <div class="h-50 pb-5">
-                                    <a href="{{ route('products.show', ['id' => $product->id]) }}">
-                                        <img class="card-img-top pb-5" src="{{ $product->image }}" alt="Product Image">
+                        <div class="col w-25 ">
+                            <div class="card hover-shadow shadow p-3 bg-white rounded border-0 h-100 ps-3 pe-3">
+                                <div class="h-50 pb-5 ">
+                                    <a class="" href="{{ route('products.show', ['id' => $product->id]) }}">
+                                        <img class="card-img-top pb-5 w-100" src="{{ $product->image }}"
+                                            alt="Product Image">
                                     </a>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text">
-                                        {{ $product->description }}
-                                    </p>
+                                    <p class="card-text">{{ $product->description }}</p>
                                     <p class="text-center fw-semibold">
-                                        {{ number_format($product->price, 0, ',', '.') }}VNĐ
-                                    </p>
+                                        {{ number_format($product->price, 0, ',', '.') }}VNĐ</p>
                                     <div class="d-flex justify-content-center">
                                         <div class="d-flex flex-column justify-content-center">
                                             <a href="{{ route('products.show', ['id' => $product->id]) }}"
-                                                class="btn bg-warning text-white ps-4 pe-4">Chi
-                                                tiết</a>
+                                                class="btn bg-warning text-white ps-4 pe-4">Chi tiết</a>
                                         </div>
                                         <div class="d-flex flex-column justify-content-center ps-1">
                                             <a href="{{ route('cart.add', ['product' => $product->id]) }}"
@@ -208,6 +218,7 @@
                     <p>No products found.</p>
                 @endif
             </div>
+
 
 
 
@@ -302,7 +313,7 @@
         </div>
 
         <!-- Bootstrap core JavaScript
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================================== -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script>
             // public/js/scripts.js hoặc tương tự
